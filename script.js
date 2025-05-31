@@ -12,21 +12,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // ---------- Gestor de niveles ----------
 function nextLevel(){
+    // Ocultar el nivel actual
+    if (currentLevel === 0) {
+        document.getElementById('startScreen').classList.add('hidden');
+    } else if (currentLevel === 1) {
+        document.getElementById('anagramZone').classList.add('hidden');
+    } else if (currentLevel === 2) {
+        document.getElementById('memoryZone').classList.add('hidden');
+    } else if (currentLevel === 3) {
+        document.getElementById('puzzleZone').classList.add('hidden');
+    }
+
     currentLevel++;
-    
-    // Ocultar TODOS los niveles explícitamente
-    const startScreen = document.getElementById('startScreen');
-    const anagramZone = document.getElementById('anagramZone');
-    const memoryZone = document.getElementById('memoryZone');
-    const puzzleZone = document.getElementById('puzzleZone');
-    const finalZone = document.getElementById('finalZone');
-    
-    if(startScreen) startScreen.classList.add('hidden');
-    if(anagramZone) anagramZone.classList.add('hidden');
-    if(memoryZone) memoryZone.classList.add('hidden');
-    if(puzzleZone) puzzleZone.classList.add('hidden');
-    if(finalZone) finalZone.classList.add('hidden');
-    
+
     // Mostrar el nivel correspondiente
     if(currentLevel === 1) {
         initAnagram();
@@ -35,8 +33,7 @@ function nextLevel(){
     } else if(currentLevel === 3) {
         initPuzzle();
     } else if(currentLevel > totalLevels) {
-        finalZone.classList.remove('hidden');
-        // new Audio('https://cdn.pixabay.com/download/audio/2022/09/20/audio_5261e17f4f.mp3?filename=party-horn-99534.mp3').play();
+        document.getElementById('finalZone').classList.remove('hidden');
     }
 }
 
