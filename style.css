@@ -37,13 +37,13 @@ button:hover {
 }
 
 .hidden {
-    display: none;
+    display: none !important;
 }
 
 #gameArea {
     width: 100vw;
     max-width: 420px;
-    min-height: 80vh;
+    min-height: 100vh;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -62,17 +62,17 @@ button:hover {
 
 /* Animaciones */
 .level-transition {
-    animation: fade-in 0.6s ease-in-out;
+    animation: slide-in 0.8s ease-in-out;
 }
 
-@keyframes fade-in {
+@keyframes slide-in {
     0% {
+        transform: translateX(-100%);
         opacity: 0;
-        transform: translateY(20px);
     }
     100% {
+        transform: translateX(0);
         opacity: 1;
-        transform: translateY(0);
     }
 }
 
@@ -82,6 +82,8 @@ button:hover {
     flex-direction: column;
     align-items: center;
     gap: 16px;
+    min-height: 100vh;
+    justify-content: center;
 }
 
 #anagramInput {
@@ -103,6 +105,8 @@ button:hover {
     flex-direction: column;
     align-items: center;
     gap: 16px;
+    min-height: 100vh;
+    justify-content: center;
 }
 
 #memoryGrid {
@@ -161,6 +165,8 @@ button:hover {
     flex-direction: column;
     align-items: center;
     gap: 16px;
+    min-height: 100vh;
+    justify-content: center;
 }
 
 #puzzleContainer {
@@ -182,16 +188,17 @@ button:hover {
 
 /* Final */
 #finalZone {
+    display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    position: fixed; /* Cambiamos a fixed */
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.8); /* Fondo oscuro para resaltar el mensaje */
-    z-index: 1000; /* Aseguramos que esté por encima de todo */
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
 }
 
 #finalMsg {
@@ -206,8 +213,15 @@ button:hover {
 }
 
 #finalZone img {
-    max-width: 90vw; /* La imagen se ajusta al ancho de la pantalla */
-    max-height: 80vh; /* La imagen se ajusta a la altura de la pantalla */
+    max-width: 90vw;
+    max-height: 80vh;
     display: block;
     margin: 0 auto;
+}
+
+@media (max-width: 500px) {
+    h1, h2 { font-size: 1.5rem; }
+    #gameArea { max-width: 100vw; }
+    .card, .pPiece { min-width: 60px; min-height: 60px; }
+    #anagramInput { font-size: 1rem; }
 }

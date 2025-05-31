@@ -46,7 +46,7 @@ function nextLevel(){
             // Mostrar el mensaje final con animación
             showMessageFinal();
         }
-    }, 100);
+    }, 500);
 }
 
 /* -------- Nivel 1: Anagramas -------- */
