@@ -51,6 +51,7 @@ function nextLevel(){
 
 /* -------- Nivel 1: Anagramas -------- */
 const anagramWords = ['PAÑALES','BABERO','SONAJERO','PATITO','CHUPETE','MAMADERA'];
+const anagramImages = ['./img/pañal.png','./img/babero.png','./img/sonajero.png','./img/patito.png','./img/chupete.png','./img/mamadera.png'];
 let anaIndex = 0;
 
 function initAnagram(){
@@ -78,6 +79,7 @@ function showScrambled(){
     document.getElementById('scrambled').textContent = shuffle(word.split('')).join('');
     document.getElementById('anagramInput').value = '';
     document.getElementById('anaFeedback').textContent = '';
+    document.getElementById('anagramImage').src = anagramImages[anaIndex]; // Actualizamos la imagen
 }
 
 function shuffle(arr){
