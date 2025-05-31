@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Misión Bebé</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="gameArea">
+    <!-- Pantalla de inicio -->
+    <div id="startScreen">
+        <h1>Misión Bebé</h1>
+        <button id="startBtn">Comenzar la misión</button>
+    </div>
+
+    <!-- Nivel 1 -->
+    <div id="anagramZone" class="hidden">
+        <h2>Nivel 1: ¡Resuelve el anagrama!</h2>
+        <div id="scrambled" style="font-size:2rem;"></div>
+        <input id="anagramInput" placeholder="Tu respuesta" inputmode="text" autocapitalize="characters" autocomplete="off" spellcheck="false">
+        <button id="checkAna">Comprobar</button>
+        <p id="anaFeedback"></p>
+    </div>
+
+    <!-- Nivel 2 -->
+    <div id="memoryZone" class="hidden">
+        <h2>Nivel 2: ¡Encuentra las parejas!</h2>
+        <div id="memoryGrid"></div>
+        <p id="memFeedback"></p>
+    </div>
+
+    <!-- Nivel 3 -->
+    <div id="puzzleZone" class="hidden">
+        <h2>Nivel 3: ¡Arma el rompecabezas!</h2>
+        <div id="puzzleContainer"></div>
+    </div>
+
+    <!-- Final -->
+    <div id="finalZone" class="hidden">
+        <h2 id="finalMsg">¡Vamos a ser papás de un niño! 👶💙</h2>
+        <img src="img/nene.png" style="border:6px solid #35a7ff;border-radius:12px;">
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

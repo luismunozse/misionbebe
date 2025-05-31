@@ -1,0 +1,181 @@
+/* Estilos generales */
+* {
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #ffffff; /* Texto blanco */
+}
+
+body {
+    margin: 0;
+    background: #0d2235; /* Fondo original */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+h1, h2 {
+    margin: 4vw 0; /* Ajuste con vw */
+    text-align: center;
+    font-size: 6vw; /* Ajuste con vw */
+}
+
+button {
+    padding: 3vw 6vw; /* Ajuste con vw */
+    border: none;
+    border-radius: 2vw; /* Ajuste con vw */
+    background: #35a7ff; /* Accent color */
+    color: #ffffff; /* Texto blanco */
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 3vw; /* Ajuste con vw */
+}
+
+button:active {
+    filter: brightness(0.95);
+}
+
+button:hover {
+    filter: brightness(1.1);
+}
+
+.hidden {
+    display: none;
+}
+
+#gameArea {
+    width: 90vw; /* Ajuste con vw */
+    max-width: 420px; /* Límite máximo */
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ----- Nivel 1 ----- */
+#anagramZone {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4vw; /* Ajuste con vw */
+}
+
+#anagramInput {
+    padding: 3vw; /* Ajuste con vw */
+    border: none;
+    border-radius: 2vw; /* Ajuste con vw */
+    width: 80vw; /* Ajuste con vw */
+    max-width: 260px; /* Límite máximo */
+    text-align: center;
+    font-size: 4vw; /* Ajuste con vw */
+    text-transform: uppercase;
+    color: #000; /* Asegura que el texto sea negro */
+    background-color: #fff; /* Asegura que el fondo sea blanco */
+}
+
+/* ----- Nivel 2 ----- */
+#memoryGrid {
+    display: grid;
+    gap: 1vw; /* Ajuste con vw */
+    grid-template-columns: repeat(3, 1fr);
+    width: 90vw; /* Ajuste con vw */
+    max-width: 300px; /* Límite máximo */
+}
+
+.card {
+    width: 28vw; /* Ajuste con vw */
+    height: 28vw; /* Ajuste con vw */
+    max-width: 90px; /* Límite máximo */
+    max-height: 90px; /* Límite máximo */
+    perspective: 600px;
+    cursor: pointer;
+}
+
+.inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+.flipped .inner {
+    transform: rotateY(180deg);
+}
+
+.face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 2vw; /* Ajuste con vw */
+    background: #122e46; /* Color de las tarjetas */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 7vw; /* Ajuste con vw */
+}
+
+.back {
+    transform: rotateY(180deg);
+    background: #fff;
+}
+
+/* ----- Nivel 3 ----- */
+#puzzleZone {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#puzzleContainer {
+    display: grid;
+    gap: 1vw; /* Ajuste con vw */
+    grid-template-columns: repeat(3, 1fr);
+    width: 90vw; /* Ajuste con vw */
+    max-width: 300px; /* Límite máximo */
+}
+
+.pPiece {
+    width: 28vw; /* Ajuste con vw */
+    height: 28vw; /* Ajuste con vw */
+    max-width: 90px; /* Límite máximo */
+    max-height: 90px; /* Límite máximo */
+    background-size: cover; /* Ajuste para la imagen */
+    cursor: grab;
+    border: 1px solid #000;
+}
+
+/* Final */
+#finalMsg {
+    font-size: 7vw; /* Ajuste con vw */
+    animation: pop 1s ease;
+}
+
+@keyframes pop {
+    0% {
+        transform: scale(0);
+    }
+    80% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+img {
+    max-width: 80vw; /* Ajuste con vw */
+}
+
+/* Estilos para la pantalla de inicio */
+#startScreen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+}
