@@ -1,35 +1,31 @@
-/* Estilos generales */
 * {
     box-sizing: border-box;
     font-family: Arial, Helvetica, sans-serif;
-    color: #ffffff; /* Texto blanco */
 }
 
 body {
     margin: 0;
-    background: #0d2235; /* Fondo original */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    background: #0d2235;
     min-height: 100vh;
+    color: #fff;
 }
 
 h1, h2 {
-    margin: 4vw 0; /* Ajuste con vw */
+    margin: 24px 0 12px 0;
     text-align: center;
-    font-size: 6vw; /* Ajuste con vw */
+    font-size: 2rem;
 }
 
 button {
-    padding: 3vw 6vw; /* Ajuste con vw */
+    padding: 12px 24px;
     border: none;
-    border-radius: 2vw; /* Ajuste con vw */
-    background: #35a7ff; /* Accent color */
-    color: #ffffff; /* Texto blanco */
+    border-radius: 8px;
+    background: #35a7ff;
+    color: #fff;
     cursor: pointer;
     font-weight: bold;
-    font-size: 3vw; /* Ajuste con vw */
+    font-size: 1.1rem;
+    margin-top: 12px;
 }
 
 button:active {
@@ -45,50 +41,50 @@ button:hover {
 }
 
 #gameArea {
-    width: 90vw; /* Ajuste con vw */
-    max-width: 420px; /* Límite máximo */
+    width: 100vw;
+    max-width: 420px;
     min-height: 80vh;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
 
-/* ----- Nivel 1 ----- */
+/* Nivel 1 */
 #anagramZone {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 4vw; /* Ajuste con vw */
+    gap: 16px;
 }
 
 #anagramInput {
-    padding: 3vw; /* Ajuste con vw */
+    padding: 12px;
     border: none;
-    border-radius: 2vw; /* Ajuste con vw */
-    width: 80vw; /* Ajuste con vw */
-    max-width: 260px; /* Límite máximo */
+    border-radius: 6px;
+    width: 90vw;
+    max-width: 260px;
     text-align: center;
-    font-size: 4vw; /* Ajuste con vw */
+    font-size: 1.2rem;
     text-transform: uppercase;
-    color: #000; /* Asegura que el texto sea negro */
-    background-color: #fff; /* Asegura que el fondo sea blanco */
+    color: #000;
+    background-color: #fff;
 }
 
-/* ----- Nivel 2 ----- */
+/* Nivel 2 */
 #memoryGrid {
     display: grid;
-    gap: 1vw; /* Ajuste con vw */
+    gap: 6px;
     grid-template-columns: repeat(3, 1fr);
-    width: 90vw; /* Ajuste con vw */
-    max-width: 300px; /* Límite máximo */
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
 }
 
 .card {
-    width: 28vw; /* Ajuste con vw */
-    height: 28vw; /* Ajuste con vw */
-    max-width: 90px; /* Límite máximo */
-    max-height: 90px; /* Límite máximo */
+    width: 90px;
+    height: 90px;
     perspective: 600px;
     cursor: pointer;
 }
@@ -110,12 +106,12 @@ button:hover {
     width: 100%;
     height: 100%;
     backface-visibility: hidden;
-    border-radius: 2vw; /* Ajuste con vw */
-    background: #122e46; /* Color de las tarjetas */
+    border-radius: 8px;
+    background: #122e46;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 7vw; /* Ajuste con vw */
+    font-size: 2rem;
 }
 
 .back {
@@ -123,7 +119,12 @@ button:hover {
     background: #fff;
 }
 
-/* ----- Nivel 3 ----- */
+.back img {
+    max-width: 70%;
+    max-height: 70%;
+}
+
+/* Nivel 3 */
 #puzzleZone {
     display: flex;
     flex-direction: column;
@@ -132,45 +133,41 @@ button:hover {
 
 #puzzleContainer {
     display: grid;
-    gap: 1vw; /* Ajuste con vw */
+    gap: 4px;
     grid-template-columns: repeat(3, 1fr);
-    width: 90vw; /* Ajuste con vw */
-    max-width: 300px; /* Límite máximo */
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
 }
 
 .pPiece {
-    width: 28vw; /* Ajuste con vw */
-    height: 28vw; /* Ajuste con vw */
-    max-width: 90px; /* Límite máximo */
-    max-height: 90px; /* Límite máximo */
-    background-size: cover; /* Ajuste para la imagen */
-    cursor: grab;
+    width: 90px;
+    height: 90px;
+    background-repeat: no-repeat;
+    background-color: #fff;
     border: 1px solid #000;
+    cursor: grab;
+    /* No pongas background-size aquí, lo pone el JS */
 }
 
 /* Final */
 #finalMsg {
-    font-size: 7vw; /* Ajuste con vw */
+    font-size: 1.7rem;
     animation: pop 1s ease;
 }
 
 @keyframes pop {
-    0% {
-        transform: scale(0);
-    }
-    80% {
-        transform: scale(1.1);
-    }
-    100% {
-        transform: scale(1);
-    }
+    0% { transform: scale(0);}
+    80% { transform: scale(1.1);}
+    100% { transform: scale(1);}
 }
 
 img {
-    max-width: 80vw; /* Ajuste con vw */
+    max-width: 90vw;
+    display: block;
+    margin: 0 auto;
 }
 
-/* Estilos para la pantalla de inicio */
 #startScreen {
     display: flex;
     flex-direction: column;
@@ -178,4 +175,12 @@ img {
     justify-content: center;
     height: 100vh;
     text-align: center;
+}
+
+@media (max-width: 500px) {
+    h1, h2 { font-size: 1.2rem; }
+    #gameArea { max-width: 100vw; }
+    .card, .pPiece { width: 22vw; height: 22vw; min-width: 60px; min-height: 60px; }
+    #puzzleContainer, #memoryGrid { max-width: 100vw; }
+    #anagramInput { font-size: 1rem; }
 }

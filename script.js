@@ -36,11 +36,7 @@ function nextLevel(){
         initPuzzle();
     } else if(currentLevel > totalLevels) {
         finalZone.classList.remove('hidden');
-        try {
-            new Audio('https://cdn.pixabay.com/download/audio/2022/09/20/audio_5261e17f4f.mp3?filename=party-horn-99534.mp3').play();
-        } catch(e) {
-            console.log('Audio no disponible');
-        }
+        // new Audio('https://cdn.pixabay.com/download/audio/2022/09/20/audio_5261e17f4f.mp3?filename=party-horn-99534.mp3').play();
     }
 }
 
@@ -201,81 +197,88 @@ function resetTurn(){
 }
 
 /* -------- Nivel 3: Puzzle -------- */
-function initPuzzle(){
-    // Mostrar zona del puzzle
-    const zone = document.getElementById('puzzleZone');
-    zone.classList.remove('hidden');
-    
+function initPuzzle() {
     const size = 3;
     const puzzleContainer = document.getElementById('puzzleContainer');
     puzzleContainer.innerHTML = '';
     puzzleContainer.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
-    
+
+    const imageSrc = 'img/bebe.gif';
+
     // Crear piezas
     const pieces = [];
-    for(let y = 0; y < size; y++){
-        for(let x = 0; x < size; x++){
-            pieces.push({x, y, idx: y * size + x});
+    for (let y = 0; y < size; y++) {
+        for (let x = 0; x < size; x++) {
+            pieces.push({ x, y, idx: y * size + x });
         }
     }
-    
+
     shuffle(pieces);
-    
-    // Agregar piezas al contenedor
+
     pieces.forEach((p, i) => {
-        puzzleContainer.insertAdjacentHTML('beforeend', `
-        <div class="pPiece" draggable="true" data-idx="${p.idx}" data-current="${i}"
-             style="order:${i}; background-image:url('img/bebe.gif'); background-position:-${p.x*90}px -${p.y*90}px; background-size: 270px 270px;"></div>`);
+        const piece = document.createElement('div');
+        piece.classList.add('pPiece');
+        piece.draggable = true;
+        piece.dataset.idx = p.idx;
+        piece.dataset.current = i;
+        piece.style.order = i;
+
+        // El truco: background-position en %
+        piece.style.backgroundImage = `url('${imageSrc}')`;
+        piece.style.backgroundSize = `${size * 100}% ${size * 100}%`;
+        piece.style.backgroundPosition = `${(p.x * 100) / (size - 1)}% ${(p.y * 100) / (size - 1)}%`;
+
+        puzzleContainer.appendChild(piece);
     });
-    
-    // Agregar eventos a las piezas
+
+    // ... (el resto de tu código de eventos y swapPieces igual que antes)
     puzzleContainer.querySelectorAll('.pPiece').forEach(el => {
         el.addEventListener('dragstart', e => {
             e.dataTransfer.setData('text', el.dataset.current);
         });
-        
+
         el.addEventListener('dragover', e => e.preventDefault());
-        
-        el.addEventListener('drop', function(e){
+
+        el.addEventListener('drop', function (e) {
             e.preventDefault();
             const fromPos = e.dataTransfer.getData('text');
             const toPos = this.dataset.current;
             swapPieces(fromPos, toPos);
-            if(isSolved()) {
+            if (isSolved()) {
                 setTimeout(() => nextLevel(), 500);
             }
         });
-        
+
         // Touch events para móviles
         let touchStart = null;
-        el.addEventListener('touchstart', function(e){
+        el.addEventListener('touchstart', function (e) {
             touchStart = this;
-        }, {passive: true});
-        
-        el.addEventListener('touchend', function(e){
+        }, { passive: true });
+
+        el.addEventListener('touchend', function (e) {
             const touch = document.elementFromPoint(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
-            if(touch && touch.classList.contains('pPiece') && touch !== touchStart){
+            if (touch && touch.classList.contains('pPiece') && touch !== touchStart) {
                 swapPieces(touchStart.dataset.current, touch.dataset.current);
-                if(isSolved()) {
+                if (isSolved()) {
                     setTimeout(() => nextLevel(), 500);
                 }
             }
             touchStart = null;
-        }, {passive: true});
+        }, { passive: true });
     });
-    
-    function swapPieces(pos1, pos2){
+
+    function swapPieces(pos1, pos2) {
         const pieces = [...puzzleContainer.children];
         const piece1 = pieces.find(p => p.dataset.current === pos1);
         const piece2 = pieces.find(p => p.dataset.current === pos2);
-        
-        if(piece1 && piece2 && piece1 !== piece2){
+
+        if (piece1 && piece2 && piece1 !== piece2) {
             [piece1.dataset.current, piece2.dataset.current] = [piece2.dataset.current, piece1.dataset.current];
             [piece1.style.order, piece2.style.order] = [piece2.style.order, piece1.style.order];
         }
     }
-    
-    function isSolved(){
+
+    function isSolved() {
         const pieces = [...puzzleContainer.children];
         return pieces.every(piece => piece.dataset.idx === piece.dataset.current);
     }
