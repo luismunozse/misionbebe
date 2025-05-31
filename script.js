@@ -25,16 +25,28 @@ function nextLevel(){
 
     currentLevel++;
 
-    // Mostrar el nivel correspondiente
-    if(currentLevel === 1) {
-        initAnagram();
-    } else if(currentLevel === 2) {
-        initMemory();
-    } else if(currentLevel === 3) {
-        initPuzzle();
-    } else if(currentLevel > totalLevels) {
-        document.getElementById('finalZone').classList.remove('hidden');
-    }
+    // Mostrar el nivel correspondiente con animación
+    setTimeout(() => {
+        if(currentLevel === 1) {
+            initAnagram();
+            const zone = document.getElementById('anagramZone');
+            zone.classList.remove('hidden');
+            zone.classList.add('level-transition');
+        } else if(currentLevel === 2) {
+            initMemory();
+            const zone = document.getElementById('memoryZone');
+            zone.classList.remove('hidden');
+            zone.classList.add('level-transition');
+        } else if(currentLevel === 3) {
+            initPuzzle();
+            const zone = document.getElementById('puzzleZone');
+            zone.classList.remove('hidden');
+            zone.classList.add('level-transition');
+        } else if(currentLevel > totalLevels) {
+            // Mostrar el mensaje final con animación
+            showMessageFinal();
+        }
+    }, 100);
 }
 
 /* -------- Nivel 1: Anagramas -------- */
@@ -42,31 +54,23 @@ const anagramWords = ['PAÑALES','BABERO','SONAJERO','PATITO','CHUPETE','MAMADER
 let anaIndex = 0;
 
 function initAnagram(){
-    // Resetear índice
     anaIndex = 0;
-    
-    // Mostrar zona del anagrama
-    const zone = document.getElementById('anagramZone');
-    zone.classList.remove('hidden');
-    
-    // Configurar primera palabra
     showScrambled();
     
-    // Configurar input
     const input = document.getElementById('anagramInput');
     input.value = '';
-    input.focus();
     
     // Limpiar eventos anteriores
     const newInput = input.cloneNode(true);
     input.parentNode.replaceChild(newInput, input);
     
-    // Agregar eventos al nuevo input
     newInput.addEventListener('input', toUpperCaseInput);
     newInput.addEventListener('keydown', checkEnter);
     
-    // Configurar botón
     document.getElementById('checkAna').onclick = checkAnagram;
+    
+    // Focus después de la animación
+    setTimeout(() => newInput.focus(), 200);
 }
 
 function showScrambled(){
@@ -95,13 +99,12 @@ function checkAnagram(){
         anaIndex++;
         
         if(anaIndex === anagramWords.length){
-            // Todas las palabras completadas
             nextLevel();
             return;
         }
         
-        // Mostrar siguiente palabra
         showScrambled();
+        document.getElementById('anagramInput').focus();
     } else {
         document.getElementById('anaFeedback').textContent = 'Intenta de nuevo 😉';
     }
@@ -121,27 +124,19 @@ let lockBoard = false;
 let matches = 0;
 
 function initMemory(){
-    // Resetear variables
     matches = 0;
     lockBoard = false;
     firstCard = null;
     
-    // Mostrar zona de memoria
-    const zone = document.getElementById('memoryZone');
-    zone.classList.remove('hidden');
-    
-    // Limpiar grid
     const grid = document.getElementById('memoryGrid');
     grid.innerHTML = '';
     
-    // Crear cartas
     const cards = [...memImgs, ...memImgs].map(src => ({
         src, 
         id: Math.random().toString(36).substr(2, 9)
     }));
     shuffle(cards);
     
-    // Agregar cartas al grid
     cards.forEach(c => {
         grid.insertAdjacentHTML('beforeend', `
         <div class="card" data-src="${c.src}">
@@ -152,7 +147,6 @@ function initMemory(){
         </div>`);
     });
     
-    // Agregar eventos a las cartas
     grid.querySelectorAll('.card').forEach(card => {
         card.addEventListener('click', flipCard);
         card.addEventListener('touchstart', flipCard, {passive: true});
@@ -169,12 +163,10 @@ function flipCard(){
         return;
     }
     
-    // Verificar si es pareja
     if(this.dataset.src === firstCard.dataset.src){
         matches++;
         resetTurn();
         
-        // Verificar si se completó el nivel
         if(matches === memImgs.length){
             setTimeout(() => nextLevel(), 1000);
         }
@@ -202,7 +194,6 @@ function initPuzzle() {
 
     const imageSrc = 'img/bebe.gif';
 
-    // Crear piezas
     const pieces = [];
     for (let y = 0; y < size; y++) {
         for (let x = 0; x < size; x++) {
@@ -220,7 +211,6 @@ function initPuzzle() {
         piece.dataset.current = i;
         piece.style.order = i;
 
-        // El truco: background-position en %
         piece.style.backgroundImage = `url('${imageSrc}')`;
         piece.style.backgroundSize = `${size * 100}% ${size * 100}%`;
         piece.style.backgroundPosition = `${(p.x * 100) / (size - 1)}% ${(p.y * 100) / (size - 1)}%`;
@@ -228,7 +218,6 @@ function initPuzzle() {
         puzzleContainer.appendChild(piece);
     });
 
-    // ... (el resto de tu código de eventos y swapPieces igual que antes)
     puzzleContainer.querySelectorAll('.pPiece').forEach(el => {
         el.addEventListener('dragstart', e => {
             e.dataTransfer.setData('text', el.dataset.current);
@@ -242,11 +231,12 @@ function initPuzzle() {
             const toPos = this.dataset.current;
             swapPieces(fromPos, toPos);
             if (isSolved()) {
-                setTimeout(() => nextLevel(), 500);
+                // Mostrar el mensaje final al completar el puzzle
+                console.log('¡Rompecabezas resuelto!'); // Agregamos un mensaje de registro
+                setTimeout(showMessageFinal, 500); // Mostrar después de 500ms
             }
         });
 
-        // Touch events para móviles
         let touchStart = null;
         el.addEventListener('touchstart', function (e) {
             touchStart = this;
@@ -257,7 +247,9 @@ function initPuzzle() {
             if (touch && touch.classList.contains('pPiece') && touch !== touchStart) {
                 swapPieces(touchStart.dataset.current, touch.dataset.current);
                 if (isSolved()) {
-                    setTimeout(() => nextLevel(), 500);
+                    // Mostrar el mensaje final al completar el puzzle
+                    console.log('¡Rompecabezas resuelto!'); // Agregamos un mensaje de registro
+                    setTimeout(showMessageFinal, 500); // Mostrar después de 500ms
                 }
             }
             touchStart = null;
@@ -279,4 +271,13 @@ function initPuzzle() {
         const pieces = [...puzzleContainer.children];
         return pieces.every(piece => piece.dataset.idx === piece.dataset.current);
     }
+}
+
+/* -------- Mensaje Final -------- */
+function showMessageFinal() {
+    document.getElementById('puzzleZone').classList.add('hidden'); // Oculta el puzzle
+    const finalZone = document.getElementById('finalZone');
+    finalZone.classList.remove('hidden');
+    finalZone.classList.add('level-transition');
+    console.log('¡Mensaje final mostrado!'); // Agregamos un mensaje de registro
 }
