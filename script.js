@@ -50,7 +50,7 @@ function nextLevel(){
 }
 
 /* -------- Nivel 1: Anagramas -------- */
-const anagramWords = ['PAÑALES','BABERO','SONAJERO','PATITO','CHUPETE','MAMADERA'];
+const anagramWords = ['PAÑAL','BABERO','SONAJERO','PATITOS','CHUPETE','MAMADERA'];
 const anagramImages = ['./img/pañal.png','./img/babero.png','./img/sonajero.png','./img/patito.png','./img/chupete.png','./img/mamadera.png'];
 let anaIndex = 0;
 
@@ -282,4 +282,38 @@ function showMessageFinal() {
     finalZone.classList.remove('hidden');
     finalZone.classList.add('level-transition');
     console.log('¡Mensaje final mostrado!'); // Agregamos un mensaje de registro
+}
+
+let fondoInterval = null;
+let fondoActual = 'azul';
+
+function alternarFondo() {
+    const body = document.body;
+    if (fondoActual === 'azul') {
+        body.classList.remove('bg-azul');
+        body.classList.add('bg-rosa');
+        fondoActual = 'rosa';
+    } else {
+        body.classList.remove('bg-rosa');
+        body.classList.add('bg-azul');
+        fondoActual = 'azul';
+    }
+}
+
+// Inicia el cambio de fondo al cargar el juego
+document.addEventListener('DOMContentLoaded', function() {
+    document.body.classList.add('bg-azul');
+    fondoInterval = setInterval(alternarFondo, 1200); // Cambia cada 1.2 segundos
+});
+
+// Opcional: Detener el cambio de fondo en la pantalla final
+function showMessageFinal() {
+    document.getElementById('puzzleZone').classList.add('hidden');
+    const finalZone = document.getElementById('finalZone');
+    finalZone.classList.remove('hidden');
+    finalZone.classList.add('level-transition');
+    if (fondoInterval) clearInterval(fondoInterval);
+    document.body.classList.remove('bg-azul', 'bg-rosa');
+    document.body.style.background = '#0d2235'; // Fondo definitivo
+    console.log('¡Mensaje final mostrado!');
 }

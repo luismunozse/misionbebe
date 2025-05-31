@@ -225,3 +225,12 @@ button:hover {
     .card, .pPiece { min-width: 60px; min-height: 60px; }
     #anagramInput { font-size: 1rem; }
 }
+
+.bg-azul {
+    background: #0d2235 !important;
+    transition: background 1s;
+}
+.bg-rosa {
+    background: #ffb6d5 !important;
+    transition: background 1s;
+}
